@@ -1,13 +1,33 @@
-# Created by https://www.gitignore.io/api/xcode,swift,cocoapods
-# Edit at https://www.gitignore.io/?templates=xcode,swift,cocoapods
+# Created by https://www.gitignore.io/api/swift,macos
+# Edit at https://www.gitignore.io/?templates=swift,macos
 
-### CocoaPods ###
-## CocoaPods GitIgnore Template
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
 
-# CocoaPods - Only use to conserve bandwidth / Save time on Pushing
-#           - Also handy if you have a large number of dependant pods
-#           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
-Pods/
+# Icon must end with two \r
+Icon 
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
 ### Swift ###
 # Xcode
@@ -44,15 +64,6 @@ xcuserdata/
 timeline.xctimeline
 playground.xcworkspace
 
-# Swift Package Manager
-# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-# Packages/
-# Package.pins
-# Package.resolved
-.build/
-# Add this line if you want to avoid checking in Xcode SPM integration.
-# .swiftpm/xcode
-
 # CocoaPods
 # We recommend against adding the Pods directory to your .gitignore. However
 # you should judge for yourself, the pros and cons are mentioned at:
@@ -66,10 +77,6 @@ playground.xcworkspace
 # Carthage/Checkouts
 
 Carthage/Build
-
-# Accio dependency management
-Dependencies/
-.accio/
 
 # fastlane
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
@@ -88,24 +95,6 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-### Xcode ###
-# Xcode
-# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+# End of https://www.gitignore.io/api/swift,macos
 
-## User settings
-
-## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
-
-## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
-
-## Xcode Patch
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata/
-!*.xcworkspace/contents.xcworkspacedata
-/*.gcno
-
-### Xcode Patch ###
-**/xcshareddata/WorkspaceSettings.xcsettings
-
-# End of https://www.gitignore.io/api/xcode,swift,cocoapods
+출처: https://aggapple.tistory.com/97 [aggapple's Ideas]
