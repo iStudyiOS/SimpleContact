@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		205911D44D9AC18FF144D76B /* Pods_SimpleContact.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C80E10FCF5B32FBCDBFD83B2 /* Pods_SimpleContact.framework */; };
 		6B87C4742653EE750000A70A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87C4732653EE750000A70A /* AppDelegate.swift */; };
 		6B87C4762653EE750000A70A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87C4752653EE750000A70A /* SceneDelegate.swift */; };
 		6B87C4782653EE750000A70A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87C4772653EE750000A70A /* MainViewController.swift */; };
 		6B87C47D2653EE760000A70A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B87C47C2653EE760000A70A /* Assets.xcassets */; };
 		6B87C4802653EE760000A70A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B87C47E2653EE760000A70A /* LaunchScreen.storyboard */; };
-		6B87C48C2653F11B0000A70A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6B87C48B2653F11B0000A70A /* SnapKit */; };
+		6B87C48C2653F11B0000A70A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 6B87C48B2653F11B0000A70A /* SwiftPackageProductDependency */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +23,6 @@
 		6B87C47C2653EE760000A70A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B87C47F2653EE760000A70A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B87C4812653EE760000A70A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C80E10FCF5B32FBCDBFD83B2 /* Pods_SimpleContact.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleContact.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,8 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				205911D44D9AC18FF144D76B /* Pods_SimpleContact.framework in Frameworks */,
-				6B87C48C2653F11B0000A70A /* SnapKit in Frameworks */,
+				6B87C48C2653F11B0000A70A /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +42,6 @@
 			children = (
 				6B87C4722653EE750000A70A /* SimpleContact */,
 				6B87C4712653EE750000A70A /* Products */,
-				F493480D7EA06D26F914EA17 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,8 +56,8 @@
 		6B87C4722653EE750000A70A /* SimpleContact */ = {
 			isa = PBXGroup;
 			children = (
-				6B87C4892653EED30000A70A /* Model */,
-				6B87C4882653EED10000A70A /* View */,
+				6B87C4952653F8A40000A70A /* Model */,
+				6B87C4942653F8A10000A70A /* View */,
 				6B87C4872653EECD0000A70A /* Controller */,
 				6B87C4732653EE750000A70A /* AppDelegate.swift */,
 				6B87C4752653EE750000A70A /* SceneDelegate.swift */,
@@ -80,26 +76,18 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		6B87C4882653EED10000A70A /* View */ = {
+		6B87C4942653F8A10000A70A /* View */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		6B87C4892653EED30000A70A /* Model */ = {
+		6B87C4952653F8A40000A70A /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		F493480D7EA06D26F914EA17 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C80E10FCF5B32FBCDBFD83B2 /* Pods_SimpleContact.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,11 +97,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6B87C4842653EE760000A70A /* Build configuration list for PBXNativeTarget "SimpleContact" */;
 			buildPhases = (
-				DF93C8DE48CCC632CE3B55AB /* [CP] Check Pods Manifest.lock */,
 				6B87C46C2653EE750000A70A /* Sources */,
 				6B87C46D2653EE750000A70A /* Frameworks */,
 				6B87C46E2653EE750000A70A /* Resources */,
-				C78BDCF47CAD0DA28D1BC6B3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -121,7 +107,7 @@
 			);
 			name = SimpleContact;
 			packageProductDependencies = (
-				6B87C48B2653F11B0000A70A /* SnapKit */,
+				6B87C48B2653F11B0000A70A /* SwiftPackageProductDependency */,
 			);
 			productName = SimpleContact;
 			productReference = 6B87C4702653EE750000A70A /* SimpleContact.app */;
@@ -151,7 +137,7 @@
 			);
 			mainGroup = 6B87C4672653EE750000A70A;
 			packageReferences = (
-				6B87C48A2653F11B0000A70A /* XCRemoteSwiftPackageReference "SnapKit" */,
+				6B87C48A2653F11B0000A70A /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 6B87C4712653EE750000A70A /* Products */;
 			projectDirPath = "";
@@ -173,48 +159,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		C78BDCF47CAD0DA28D1BC6B3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SimpleContact/Pods-SimpleContact-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SimpleContact/Pods-SimpleContact-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimpleContact/Pods-SimpleContact-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DF93C8DE48CCC632CE3B55AB /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SimpleContact-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6B87C46C2653EE750000A70A /* Sources */ = {
@@ -417,7 +361,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6B87C48A2653F11B0000A70A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		6B87C48A2653F11B0000A70A /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -428,9 +372,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6B87C48B2653F11B0000A70A /* SnapKit */ = {
+		6B87C48B2653F11B0000A70A /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6B87C48A2653F11B0000A70A /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 6B87C48A2653F11B0000A70A /* RemoteSwiftPackageReference */;
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
