@@ -154,6 +154,9 @@ class MainViewController: UIViewController {
         print("favorite button이 터치되었습니다.")
     }
     @objc private func addButtonTapped(_ sender: UIButton) {
+        let editViewController = EditViewController()
+        // EditViewController push
+        self.navigationController?.pushViewController(editViewController, animated: true)
         print("add button이 터치되었습니다.")
     }
 }
