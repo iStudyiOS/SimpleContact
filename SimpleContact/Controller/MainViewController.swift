@@ -146,6 +146,7 @@ class MainViewController: UIViewController {
         tableView.register(MainViewTableViewCell.self, forCellReuseIdentifier: MainViewTableViewCell.identifier)
     }
     
+    
     // MARK: - Selector
     @objc private func allButtonTapped(_ sender: UIButton) {
         print("all button이 터치되었습니다.")
@@ -206,7 +207,44 @@ extension MainViewController: UITableViewDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         cell.selectionStyle = .none
     }
+  
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("\(indexPath.row)번째 cell이 터치되었습니다")
     }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // leadungSwipe는 왼쪽 스와이프
+        
+        let like = UIContextualAction(style: .normal, title: "like") { (UIContextualAction, UIView, success: @escaping(Bool) -> Void) in
+            print("Like 클릭")
+            success(true)
+        }
+        like.image = UIImage(systemName: "star")
+        like.title = nil
+        like.backgroundColor = .systemPink
+        
+        return UISwipeActionsConfiguration(actions: [like])
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+            // trailingSwipe는 오른쪽 스와이프
+            
+            let edit = UIContextualAction(style: .normal, title: "Edit") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+                print("Edit 클릭")
+                success(true)
+            }
+            edit.backgroundColor = .systemBlue
+            
+            
+            let delete = UIContextualAction(style: .normal, title: "Delete") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+                print("Delete 클릭")
+                success(true)
+            }
+            delete.backgroundColor = .systemRed
+            
+            //actions배열 인덱스 0이 오른쪽에 붙어서 나옴
+            return UISwipeActionsConfiguration(actions:[delete, edit])
+        }
 }
+
