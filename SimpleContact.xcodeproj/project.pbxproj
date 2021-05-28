@@ -17,6 +17,7 @@
 		6B87C47D2653EE760000A70A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B87C47C2653EE760000A70A /* Assets.xcassets */; };
 		6B87C4802653EE760000A70A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B87C47E2653EE760000A70A /* LaunchScreen.storyboard */; };
 		6B87C48C2653F11B0000A70A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6B87C48B2653F11B0000A70A /* SnapKit */; };
+		C12E7B0B2661373F008934ED /* Person.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C12E7B092661373F008934ED /* Person.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		6B87C47C2653EE760000A70A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B87C47F2653EE760000A70A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B87C4812653EE760000A70A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C12E7B0A2661373F008934ED /* Person.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Person.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				09FB2934265FCD7E00752300 /* Person.swift */,
+				C12E7B092661373F008934ED /* Person.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 			files = (
 				0956E6642653FFED00D5B4F9 /* EditViewController.swift in Sources */,
 				0958A30D2654D00100D054CD /* EditView.swift in Sources */,
+				C12E7B0B2661373F008934ED /* Person.xcdatamodeld in Sources */,
 				6B87C4742653EE750000A70A /* AppDelegate.swift in Sources */,
 				6B87C4762653EE750000A70A /* SceneDelegate.swift in Sources */,
 				09FB2935265FCD7E00752300 /* Person.swift in Sources */,
@@ -323,7 +327,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2DC647Y566;
 				INFOPLIST_FILE = SimpleContact/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -341,7 +347,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2DC647Y566;
 				INFOPLIST_FILE = SimpleContact/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -394,6 +402,19 @@
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		C12E7B092661373F008934ED /* Person.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C12E7B0A2661373F008934ED /* Person.xcdatamodel */,
+			);
+			currentVersion = C12E7B0A2661373F008934ED /* Person.xcdatamodel */;
+			path = Person.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6B87C4682653EE750000A70A /* Project object */;
 }

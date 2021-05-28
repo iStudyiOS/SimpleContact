@@ -136,6 +136,7 @@ class EditViewController: UIViewController {
     }
     
     @objc private func clickYes(_ sender: UIButton){
+        // 저장
         print("yes")
     }
     
