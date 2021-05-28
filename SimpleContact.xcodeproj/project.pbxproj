@@ -10,6 +10,8 @@
 		0956E6642653FFED00D5B4F9 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0956E6632653FFED00D5B4F9 /* EditViewController.swift */; };
 		0958A30D2654D00100D054CD /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0958A30C2654D00100D054CD /* EditView.swift */; };
 		0958A30F2657BE7400D054CD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0958A30E2657BE7400D054CD /* MainViewController.swift */; };
+		09FB2931265FCCFC00752300 /* MainViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB2930265FCCFC00752300 /* MainViewTableViewCell.swift */; };
+		09FB2935265FCD7E00752300 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB2934265FCD7E00752300 /* Person.swift */; };
 		6B87C4742653EE750000A70A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87C4732653EE750000A70A /* AppDelegate.swift */; };
 		6B87C4762653EE750000A70A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B87C4752653EE750000A70A /* SceneDelegate.swift */; };
 		6B87C47D2653EE760000A70A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B87C47C2653EE760000A70A /* Assets.xcassets */; };
@@ -21,6 +23,8 @@
 		0956E6632653FFED00D5B4F9 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		0958A30C2654D00100D054CD /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		0958A30E2657BE7400D054CD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		09FB2930265FCCFC00752300 /* MainViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewTableViewCell.swift; sourceTree = "<group>"; };
+		09FB2934265FCD7E00752300 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		6B87C4702653EE750000A70A /* SimpleContact.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleContact.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B87C4732653EE750000A70A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B87C4752653EE750000A70A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,8 +49,17 @@
 			isa = PBXGroup;
 			children = (
 				0958A30C2654D00100D054CD /* EditView.swift */,
+				09FB2930265FCCFC00752300 /* MainViewTableViewCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		09FB2933265FCD4700752300 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				09FB2934265FCD7E00752300 /* Person.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		6B87C4672653EE750000A70A = {
@@ -68,6 +81,7 @@
 		6B87C4722653EE750000A70A /* SimpleContact */ = {
 			isa = PBXGroup;
 			children = (
+				09FB2933265FCD4700752300 /* Model */,
 				0956E6602653FCE500D5B4F9 /* View */,
 				6B87C4872653EECD0000A70A /* Controller */,
 				6B87C4732653EE750000A70A /* AppDelegate.swift */,
@@ -167,7 +181,9 @@
 				0958A30D2654D00100D054CD /* EditView.swift in Sources */,
 				6B87C4742653EE750000A70A /* AppDelegate.swift in Sources */,
 				6B87C4762653EE750000A70A /* SceneDelegate.swift in Sources */,
+				09FB2935265FCD7E00752300 /* Person.swift in Sources */,
 				0958A30F2657BE7400D054CD /* MainViewController.swift in Sources */,
+				09FB2931265FCCFC00752300 /* MainViewTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

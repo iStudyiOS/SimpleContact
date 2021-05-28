@@ -122,6 +122,8 @@ class EditViewController: UIViewController {
     }
     
     @objc private func back(_ sender: Any){
+        // 현재 뷰를 메모리 상 제거 하고 이전 뷰로 돌아감 네비게이션 스택을 한번 pop처리
+        navigationController?.popViewController(animated: true)
         print("back 클릭")
     }
     
@@ -158,14 +160,14 @@ class EditViewController: UIViewController {
         
         ImageView.snp.makeConstraints {
             $0.width.height.equalTo(120)
-            $0.top.equalTo(view).offset(90)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
             $0.left.equalTo(40)
         }
         
         nameLabel.snp.makeConstraints {
             $0.width.equalTo(100)
             $0.height.equalTo(30)
-            $0.top.equalTo(100)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.equalTo(-80)
         }
         
@@ -179,7 +181,7 @@ class EditViewController: UIViewController {
         favoriteLabel.snp.makeConstraints {
             $0.width.equalTo(100)
             $0.height.equalTo(30)
-            $0.top.equalTo(280)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(200)
             $0.centerX.equalTo(view)
         }
         

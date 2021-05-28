@@ -11,6 +11,7 @@ import UIKit
 class MainViewTableViewCell: UITableViewCell {
     // MARK: - Property
 
+
     static let identifier = String(describing: MainViewTableViewCell.self)
     
     private lazy var personImageView: UIImageView = {
@@ -122,6 +123,8 @@ class MainViewTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     // MARK: - Helper
 
