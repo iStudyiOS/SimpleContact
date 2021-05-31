@@ -1,4 +1,4 @@
-//
+
 //  Person.swift
 //  SimpleContact
 //
@@ -7,9 +7,14 @@
 
 import Foundation
 
-struct Person {
+struct Person: Equatable{
     var name: String
     var phone: String
     var favorite: Bool
     var memo: String
+    
+    static func ==(left: Person, right: Person) -> Bool {
+        return left.name == right.name && left.phone == right.phone
+    }
 }
+

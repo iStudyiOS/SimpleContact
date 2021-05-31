@@ -129,6 +129,10 @@ class EditViewController: UIViewController {
     
     @objc private func save(_ sender: Any){
         print("save 클릭")
+        //TODO UI 값 가져와서 Person instance 생성하기
+        let person = Person(name: "test", phone: "010-1234-1234", favorite: true, memo: "memo")
+        PersistenceManager.shared.create(person: person)
+
     }
     
     @objc private func addPhoto(_ sender: UIButton){
