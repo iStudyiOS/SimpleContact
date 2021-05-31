@@ -70,12 +70,7 @@ class MainViewController: UIViewController {
         return stackView
     }()
     
-    private let dummyData: [Person] = [
-        Person(name: "가나다", phone: "010-1234-5678", favorite: false, memo: "한 줄 텍스트"),
-        Person(name: "홍길동", phone: "010-3456-7890", favorite: false, memo: "두 줄 텍스트를 출력해볼게요. 두줄입니다."),
-        Person(name: "좋아요", phone: "010-5555-5555", favorite: true, memo: "이번엔 세 줄의 텍스트를 출력해볼까요? 세 줄의 텍스트를 출력해보겠습니다."),
-        Person(name: "개발자", phone: "010-2468-1357", favorite: false, memo: "네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄네줄")
-    ]
+    private let dummyData: [Person] = PersistenceManager.shared.read()
     
     // MARK: - Lifecycle
 
