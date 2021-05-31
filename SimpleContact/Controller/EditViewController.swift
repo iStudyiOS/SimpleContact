@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 class EditViewController: UIViewController {
-    
     private lazy var ImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -106,45 +105,47 @@ class EditViewController: UIViewController {
         return button
     }()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        self.title = "Edit"
-        self.view.backgroundColor = .white
+        title = "Edit"
+        view.backgroundColor = .white
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(back(_:)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(save(_:)))
-        
-
-        
     }
     
-    @objc private func back(_ sender: Any){
+    @objc private func back(_ sender: Any) {
         // 현재 뷰를 메모리 상 제거 하고 이전 뷰로 돌아감 네비게이션 스택을 한번 pop처리
         navigationController?.popViewController(animated: true)
         print("back 클릭")
     }
     
-    @objc private func save(_ sender: Any){
+    @objc private func save(_ sender: Any) {
         print("save 클릭")
-        //TODO UI 값 가져와서 Person instance 생성하기
-        let person = Person(name: "test", phone: "010-1234-1234", favorite: true, memo: "memo")
-        PersistenceManager.shared.create(person: person)
-
+        // TODO: UI 값 가져와서 Contact instance 생성하기
+        
+        guard let name = nameTextField.text else { return }
+        guard let memo = memoTextView.text else { return }
+        guard let phone = phoneTextField.text else { return }
+        
+        // favorite는 임시로 true로 설정함. create가 끝난 뒤 popViewController가 실행되도록 구현
+        PersistenceManager.shared.createContact(name: name, memo: memo, phone: phone, favorite: true) {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
-    @objc private func addPhoto(_ sender: UIButton){
+    @objc private func addPhoto(_ sender: UIButton) {
         print("사진 등록")
     }
     
-    @objc private func clickYes(_ sender: UIButton){
+    @objc private func clickYes(_ sender: UIButton) {
         // 저장
         print("yes")
     }
     
-    @objc private func clickNo(_ sender: UIButton){
+    @objc private func clickNo(_ sender: UIButton) {
         print("No")
     }
 
@@ -223,7 +224,6 @@ class EditViewController: UIViewController {
             $0.height.equalTo(30)
             $0.top.equalTo(nameLabel).offset(35)
             $0.leading.equalTo(nameLabel)
-            
         }
         
         phoneTextField.snp.makeConstraints {
@@ -231,7 +231,6 @@ class EditViewController: UIViewController {
             $0.height.equalTo(30)
             $0.top.equalTo(phoneLabel).offset(35)
             $0.leading.equalTo(nameLabel)
-            
         }
         
         memoTextView.snp.makeConstraints {
@@ -239,30 +238,24 @@ class EditViewController: UIViewController {
             $0.top.equalTo(memoLabel).offset(40)
             $0.bottom.equalTo(view).offset(-30)
             $0.centerX.equalTo(view)
-            
         }
-        
     }
-    
 }
 
 // SwiftUI코드로 레이아웃 프리뷰 확인
 
 #if DEBUG
 import SwiftUI
-struct ViewControllerRepresentable: UIViewControllerRepresentable
-{
-    
+struct ViewControllerRepresentable: UIViewControllerRepresentable {
     // update
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        
-    }
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+
     // makeUI
     @available(iOS 13.0, *)
     func makeUIViewController(context: Context) -> UIViewController {
-            EditViewController()
-        }
+        EditViewController()
     }
+}
 
 struct ViewController_Previews: PreviewProvider {
     static var previews: some View {
@@ -272,7 +265,4 @@ struct ViewController_Previews: PreviewProvider {
     }
 }
 
-
-
 #endif
-

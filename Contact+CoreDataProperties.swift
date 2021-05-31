@@ -16,10 +16,10 @@ extension Contact {
         return NSFetchRequest<Contact>(entityName: "Contact")
     }
 
-    @NSManaged public var name: String?
-    @NSManaged public var memo: String?
+    @NSManaged public var name: String
+    @NSManaged public var memo: String
     @NSManaged public var favorite: Bool
-    @NSManaged public var phone: String?
+    @NSManaged public var phone: String
 
 }
 

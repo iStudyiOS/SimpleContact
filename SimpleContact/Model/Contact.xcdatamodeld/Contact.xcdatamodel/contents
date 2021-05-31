@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H15" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Contact" representedClassName="Contact" syncable="YES">
-        <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="memo" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="phone" optional="YES" attributeType="String"/>
+        <attribute name="favorite" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="memo" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="phone" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Contact" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Contact" positionX="-63" positionY="-18" width="128" height="89"/>
     </elements>
 </model>

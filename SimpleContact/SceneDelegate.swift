@@ -15,10 +15,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
 
-
-        
-        // 윈도우의 크기 설정
-        window = UIWindow(frame: UIScreen.main.bounds)
         // 뷰컨트롤러 인스턴스 가져오기
         let VC = MainViewController()
         
@@ -31,9 +27,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // 설정한 윈도우를 보이게 끔 설정
         window?.makeKeyAndVisible()
-        
-        // 윈도우씬 설정
-        window?.windowScene = scene
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
