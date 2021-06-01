@@ -11,7 +11,7 @@ import UIKit
 class MainViewController: UIViewController {
     // MARK: - Property
     
-    private let headerView: UIView = UIView()
+    private let headerView = UIView()
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -70,7 +70,7 @@ class MainViewController: UIViewController {
         return stackView
     }()
     
-    private let dummyData: [Person] = PersistenceManager.shared.read()
+    private var contacts: [Contact] = []
     
     // MARK: - Lifecycle
 
@@ -80,7 +80,32 @@ class MainViewController: UIViewController {
         setupTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // ViewController가 나타날 때 navigationBar를 숨김
+        navigationController?.navigationBar.isHidden = true
+        // ViewController가 나타날 때 contact 값을 새로 읽어옴
+        readContacts()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // ViewController가 사라질 때 navigationBar를 보이게 함
+        navigationController?.navigationBar.isHidden = false
+    }
+    
     // MARK: - Helper
+    
+    private func readContacts(isAll: Bool = true) {
+        // 새로 contacts를 읽어와 contacts의 값으로 만들어 줌
+        
+        // NSPredicate 특유의(아마도 Objective-C 문법) 문법을 이용해 filterFavoritePredicate 정의
+        let favoritePredicate: NSPredicate? = isAll ? nil : NSPredicate(format: "%K == YES", #keyPath(Contact.favorite))
+        
+        contacts = PersistenceManager.shared.readContacts(filterPredicate: favoritePredicate)
+        // tableView를 reload하하여 새로 불러온 값이 적용되도록 함
+        tableView.reloadData()
+    }
 
     private func setupUI() {
         // 기본 뷰의 background color 설정
@@ -141,23 +166,28 @@ class MainViewController: UIViewController {
         tableView.register(MainViewTableViewCell.self, forCellReuseIdentifier: MainViewTableViewCell.identifier)
     }
     
-    
     // MARK: - Selector
+
     @objc private func allButtonTapped(_ sender: UIButton) {
         print("all button이 터치되었습니다.")
+        readContacts(isAll: true)
     }
+
     @objc private func favoriteButtonTapped(_ sender: UIButton) {
         print("favorite button이 터치되었습니다.")
+        readContacts(isAll: false)
     }
+
     @objc private func addButtonTapped(_ sender: UIButton) {
         let editViewController = EditViewController()
         // EditViewController push
-        self.navigationController?.pushViewController(editViewController, animated: true)
+        navigationController?.pushViewController(editViewController, animated: true)
         print("add button이 터치되었습니다.")
     }
 }
 
 // MARK: - UISearchBarDelegate
+
 extension MainViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.setShowsCancelButton(true, animated: true)
@@ -175,35 +205,38 @@ extension MainViewController: UISearchBarDelegate {
 }
 
 // MARK: - UITableViewDataSource
+
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainViewTableViewCell.identifier, for: indexPath) as? MainViewTableViewCell else {
             let viewControllerName = String(describing: MainViewController.self)
             fatalError("\(viewControllerName)에서 \(MainViewTableViewCell.identifier)를 dequeue하는 데에 실패하였습니다.")
         }
-        cell.nameText = dummyData[indexPath.row].name
-        cell.phoneText = dummyData[indexPath.row].phone
-        cell.memoText = dummyData[indexPath.row].memo
-        cell.isFavorite = dummyData[indexPath.row].favorite
+        cell.nameText = contacts[indexPath.row].name
+        cell.phoneText = contacts[indexPath.row].phone
+        cell.memoText = contacts[indexPath.row].memo
+        cell.isFavorite = contacts[indexPath.row].favorite
         return cell
     }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyData.count
+        return contacts.count
     }
 }
 
 // MARK: - UITableViewDelegate
+
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         cell.selectionStyle = .default
     }
+    
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         cell.selectionStyle = .none
     }
   
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("\(indexPath.row)번째 cell이 터치되었습니다")
     }
@@ -211,9 +244,16 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         // leadungSwipe는 왼쪽 스와이프
         
-        let like = UIContextualAction(style: .normal, title: "like") { (UIContextualAction, UIView, success: @escaping(Bool) -> Void) in
+        let like = UIContextualAction(style: .normal, title: "like") { (_, _, success: @escaping (Bool) -> Void) in
             print("Like 클릭")
-            success(true)
+            let selectedContact = self.contacts[indexPath.row]
+            PersistenceManager.shared.updateContact(selectedContact, name: selectedContact.name, memo: selectedContact.memo, phone: selectedContact.phone, favorite: !selectedContact.favorite) {
+                success(true)
+                guard let cell = tableView.cellForRow(at: indexPath) as? MainViewTableViewCell else {
+                    fatalError()
+                }
+                cell.isFavorite = selectedContact.favorite
+            }
         }
         like.image = UIImage(systemName: "star")
         like.title = nil
@@ -223,23 +263,25 @@ extension MainViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-            // trailingSwipe는 오른쪽 스와이프
+        // trailingSwipe는 오른쪽 스와이프
             
-            let edit = UIContextualAction(style: .normal, title: "Edit") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
-                print("Edit 클릭")
-                success(true)
-            }
-            edit.backgroundColor = .systemBlue
-            
-            
-            let delete = UIContextualAction(style: .normal, title: "Delete") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
-                print("Delete 클릭")
-                success(true)
-            }
-            delete.backgroundColor = .systemRed
-            
-            //actions배열 인덱스 0이 오른쪽에 붙어서 나옴
-            return UISwipeActionsConfiguration(actions:[delete, edit])
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (_, _, success: @escaping (Bool) -> Void) in
+            print("Edit 클릭")
+            success(true)
         }
+        edit.backgroundColor = .systemBlue
+            
+        let delete = UIContextualAction(style: .normal, title: "Delete") { (_, _, success: @escaping (Bool) -> Void) in
+            print("Delete 클릭")
+            let selectedContact = self.contacts[indexPath.row]
+            PersistenceManager.shared.deleteContact(selectedContact)
+            self.contacts.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            success(true)
+        }
+        delete.backgroundColor = .systemRed
+            
+        // actions배열 인덱스 0이 오른쪽에 붙어서 나옴
+        return UISwipeActionsConfiguration(actions: [delete, edit])
+    }
 }
-

@@ -5,16 +5,16 @@
 //  Created by 김두리 on 2021/05/31.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class PersistenceManager {
-    static var shared: PersistenceManager = PersistenceManager()
+    static var shared = PersistenceManager()
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Contact")
         container.loadPersistentStores(completionHandler: {
-            (storeDescription, error) in
+            _, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
@@ -23,55 +23,72 @@ class PersistenceManager {
     }()
     
     var context: NSManagedObjectContext {
-        return self.persistentContainer.viewContext
+        return persistentContainer.viewContext
     }
     
-    func create(person: Person) -> Void {
-        let entity = NSEntityDescription.entity(forEntityName: "Contact", in: self.context)
-        
-        if let entity = entity {
-            let manageObject = NSManagedObject(entity: entity, insertInto: self.context)
-            manageObject.setValue(person.name, forKey: "name")
-            manageObject.setValue(person.memo, forKey: "memo")
-            manageObject.setValue(person.phone, forKey: "phone")
-            manageObject.setValue(person.favorite, forKey: "favorite")
-            
-            do {
-                try self.context.save()
-            } catch {
-                print(error.localizedDescription)
+    func saveContext() {
+        // context 내부에 변화가 없다면 저장하지 않도록 하여 불필요한 연산을 줄임. context.save는 연산량이 많은 메소드라고 함.
+        if context.hasChanges {
+            // perform 메소드는 Thread 관련한 문제를 미리 방지해주기 위해 쓰는 메소드라는데 정확히는 모릅니다 ㅎㅎ - 진태
+            context.perform {
+                do {
+                    try self.context.save()
+                } catch {
+                    fatalError(error.localizedDescription)
+                }
             }
         }
     }
     
-    func read() -> [Person] {
-        let readRequest = NSFetchRequest<NSManagedObject>(entityName: "Contact")
+    func createContact(name: String, memo: String, phone: String, favorite: Bool, completion: (() -> Void)? = nil) {
+        let contact = Contact(context: context)
         
-        let personData = try! context.fetch(readRequest)
-    
-        var dataToPerson = [Person]()
-        print(personData.count)
-        
-        for data in personData{
-            let name = data.value(forKey: "name") as! String
-            let phone = data.value(forKey: "phone") as! String
-            let favorite = data.value(forKey: "favorite") as! Bool
-            let memo = data.value(forKey: "memo") as! String
+        contact.name = name
+        contact.memo = memo
+        contact.phone = phone
+        contact.favorite = favorite
             
-            dataToPerson.append(Person(name: name, phone: phone, favorite: favorite, memo: memo))
+        saveContext()
+        completion?()
+    }
+    
+    // filterPredicate는 나중에 Favorite 버튼을 눌렀을 때 Favorite된 데이터만 불러오기 위해 넣어줌
+    func readContacts(filterPredicate: NSPredicate? = nil) -> [Contact] {
+        let readRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
+        
+        // Contact의 이름 순에 따라 Sort하기 위한 코드
+        let sortByName = NSSortDescriptor(key: #keyPath(Contact.name), ascending: true)
+        readRequest.sortDescriptors = [sortByName]
+        readRequest.predicate = filterPredicate
+        
+        var contactList = [Contact]() // 빈 배열 생성
+        
+        // contactList의 값을 읽어옴
+        context.performAndWait {
+            do {
+                contactList = try context.fetch(readRequest)
+            } catch {
+                fatalError(error.localizedDescription)
+            }
         }
         
-        return dataToPerson
+        return contactList
     }
     
-    // TODO edit person info
-    func update(person: Person) -> Person {
-        return person
-    }
-    
-    //TODO delete Person
-    func delete(person: Person) -> Bool {
+    // TODO: edit person info
+    func updateContact(_ contact: Contact, name: String, memo: String, phone: String, favorite: Bool, completion: (() -> Void)? = nil) {
+        contact.name = name
+        contact.memo = memo
+        contact.phone = phone
+        contact.favorite = favorite
         
-        return true
+        saveContext()
+        completion?()
+    }
+    
+    // TODO: delete Person
+    func deleteContact(_ contact: Contact) {
+        context.delete(contact)
+        saveContext()
     }
 }
