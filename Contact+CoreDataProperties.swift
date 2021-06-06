@@ -2,7 +2,7 @@
 //  Contact+CoreDataProperties.swift
 //  SimpleContact
 //
-//  Created by 김두리 on 2021/05/31.
+//  Created by 김두리 on 2021/06/06.
 //
 //
 
@@ -16,10 +16,11 @@ extension Contact {
         return NSFetchRequest<Contact>(entityName: "Contact")
     }
 
-    @NSManaged public var name: String
-    @NSManaged public var memo: String
     @NSManaged public var favorite: Bool
-    @NSManaged public var phone: String
+    @NSManaged public var memo: String?
+    @NSManaged public var name: String?
+    @NSManaged public var phone: String?
+    @NSManaged public var photo: Data?
 
 }
 

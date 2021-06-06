@@ -40,14 +40,15 @@ class PersistenceManager {
         }
     }
     
-    func createContact(name: String, memo: String, phone: String, favorite: Bool, completion: (() -> Void)? = nil) {
+    func createContact(name: String, memo: String, phone: String, favorite: Bool, photo: Data, completion: (() -> Void)? = nil) {
         let contact = Contact(context: context)
         
         contact.name = name
         contact.memo = memo
         contact.phone = phone
         contact.favorite = favorite
-            
+        contact.photo = photo
+        
         saveContext()
         completion?()
     }
@@ -76,11 +77,12 @@ class PersistenceManager {
     }
     
     // TODO: edit person info
-    func updateContact(_ contact: Contact, name: String, memo: String, phone: String, favorite: Bool, completion: (() -> Void)? = nil) {
+    func updateContact(_ contact: Contact, name: String, memo: String, phone: String, favorite: Bool, photo: Data, completion: (() -> Void)? = nil) {
         contact.name = name
         contact.memo = memo
         contact.phone = phone
         contact.favorite = favorite
+        contact.photo = photo
         
         saveContext()
         completion?()

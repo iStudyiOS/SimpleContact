@@ -216,6 +216,7 @@ extension MainViewController: UITableViewDataSource {
         cell.phoneText = contacts[indexPath.row].phone
         cell.memoText = contacts[indexPath.row].memo
         cell.isFavorite = contacts[indexPath.row].favorite
+        cell.personImage = UIImage(data: contacts[indexPath.row].photo!)
         return cell
     }
 
@@ -247,7 +248,7 @@ extension MainViewController: UITableViewDelegate {
         let like = UIContextualAction(style: .normal, title: "like") { (_, _, success: @escaping (Bool) -> Void) in
             print("Like 클릭")
             let selectedContact = self.contacts[indexPath.row]
-            PersistenceManager.shared.updateContact(selectedContact, name: selectedContact.name, memo: selectedContact.memo, phone: selectedContact.phone, favorite: !selectedContact.favorite) {
+            PersistenceManager.shared.updateContact(selectedContact, name: selectedContact.name!, memo: selectedContact.memo!, phone: selectedContact.phone!, favorite: !selectedContact.favorite, photo: selectedContact.photo!) {
                 success(true)
                 guard let cell = tableView.cellForRow(at: indexPath) as? MainViewTableViewCell else {
                     fatalError()

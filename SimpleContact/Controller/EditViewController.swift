@@ -7,8 +7,11 @@
 
 import SnapKit
 import UIKit
+import PhotosUI
 
-class EditViewController: UIViewController {
+class EditViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    var imagePicker = UIImagePickerController()
+    
     private lazy var ImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -114,6 +117,10 @@ class EditViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(back(_:)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(save(_:)))
+        
+        self.imagePicker.sourceType = .photoLibrary
+        self.imagePicker.allowsEditing = true
+        self.imagePicker.delegate = self
     }
     
     @objc private func back(_ sender: Any) {
@@ -129,17 +136,32 @@ class EditViewController: UIViewController {
         guard let name = nameTextField.text else { return }
         guard let memo = memoTextView.text else { return }
         guard let phone = phoneTextField.text else { return }
+        guard let photo = self.ImageView.image?.pngData() else { return }
         
         // favorite는 임시로 true로 설정함. create가 끝난 뒤 popViewController가 실행되도록 구현
-        PersistenceManager.shared.createContact(name: name, memo: memo, phone: phone, favorite: true) {
+        PersistenceManager.shared.createContact(name: name, memo: memo, phone: phone, favorite: true, photo: photo) {
             self.navigationController?.popViewController(animated: true)
         }
     }
     
     @objc private func addPhoto(_ sender: UIButton) {
         print("사진 등록")
+        self.present(self.imagePicker, animated: true)
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            var newImage: UIImage? = nil
+            
+            if let updateImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+                newImage = updateImage
+            } else if let updateImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+                newImage = updateImage
+            }
+            
+            
+            self.ImageView.image = newImage
+            picker.dismiss(animated: true, completion: nil)
+        }
     @objc private func clickYes(_ sender: UIButton) {
         // 저장
         print("yes")
