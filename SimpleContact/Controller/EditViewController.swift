@@ -9,6 +9,9 @@ import SnapKit
 import UIKit
 
 class EditViewController: UIViewController {
+    
+    var contact: Contact?
+    
     private lazy var ImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -108,6 +111,11 @@ class EditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 텍스트필드,텍스트뷰에 받아온 값 넣어주기
+        nameTextField.text = contact?.name
+        phoneTextField.text = contact?.phone
+        memoTextView.text = contact?.memo
+        
         setupUI()
         title = "Edit"
         view.backgroundColor = .white
@@ -131,9 +139,16 @@ class EditViewController: UIViewController {
         guard let phone = phoneTextField.text else { return }
         
         // favorite는 임시로 true로 설정함. create가 끝난 뒤 popViewController가 실행되도록 구현
-        PersistenceManager.shared.createContact(name: name, memo: memo, phone: phone, favorite: true) {
-            self.navigationController?.popViewController(animated: true)
+        // contact에 값이 있으면 update 없으면 create
+        if let contact = contact {
+            PersistenceManager.shared.updateContact(contact, name: name, memo: memo, phone: phone, favorite: true) {
+                self.navigationController?.popViewController(animated: true)
+            }
+        } else {
+            PersistenceManager.shared.createContact(name: name, memo: memo, phone: phone, favorite: true) {
+                self.navigationController?.popViewController(animated: true)
         }
+    }
     }
     
     @objc private func addPhoto(_ sender: UIButton) {
