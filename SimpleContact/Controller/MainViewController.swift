@@ -267,6 +267,10 @@ extension MainViewController: UITableViewDelegate {
             
         let edit = UIContextualAction(style: .normal, title: "Edit") { (_, _, success: @escaping (Bool) -> Void) in
             print("Edit 클릭")
+            // edit버튼 클릭시 해당 셀의 데이터를 contact에 넣고 push
+            let editViewController = EditViewController()
+            editViewController.contact = self.contacts[indexPath.row]
+            self.navigationController?.pushViewController(editViewController, animated: true)
             success(true)
         }
         edit.backgroundColor = .systemBlue
