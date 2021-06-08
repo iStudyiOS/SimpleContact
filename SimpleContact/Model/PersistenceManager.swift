@@ -40,16 +40,28 @@ class PersistenceManager {
         }
     }
     
-    func createContact(name: String, memo: String, phone: String, favorite: Bool, completion: (() -> Void)? = nil) {
+    func createContact(name: String, memo: String, phone: String, favorite: Bool, photo: Data, completion: ((_ error: NSError?) -> Void)? = nil) {
         let contact = Contact(context: context)
         
         contact.name = name
         contact.memo = memo
         contact.phone = phone
         contact.favorite = favorite
-            
+        contact.photo = photo
+        
+        // contact가 추가되었을 때의 validation을 확인하는 코드
+        do {
+            try contact.validateForInsert()
+        } catch let error as NSError {
+            // contact가 context에 추가된 상태에서 (저장은 아직 안 함) contact가 올바르지 않은 형태임을 확인하였으므로 rollback해줌
+            context.rollback()
+            // completion에 에러를 전달함
+            completion?(error)
+            return
+        }
+        
         saveContext()
-        completion?()
+        completion?(nil)
     }
     
     // filterPredicate는 나중에 Favorite 버튼을 눌렀을 때 Favorite된 데이터만 불러오기 위해 넣어줌
@@ -76,11 +88,12 @@ class PersistenceManager {
     }
     
     // TODO: edit person info
-    func updateContact(_ contact: Contact, name: String, memo: String, phone: String, favorite: Bool, completion: (() -> Void)? = nil) {
+    func updateContact(_ contact: Contact, name: String, memo: String, phone: String, favorite: Bool, photo: Data, completion: (() -> Void)? = nil) {
         contact.name = name
         contact.memo = memo
         contact.phone = phone
         contact.favorite = favorite
+        contact.photo = photo
         
         saveContext()
         completion?()
