@@ -96,13 +96,11 @@ class MainViewController: UIViewController {
     
     // MARK: - Helper
     
-    private func readContacts(isAll: Bool = true) {
+    // predicate를 인자로 받도록 바꾸어줌
+    private func readContacts(predicate: NSPredicate? = nil) {
         // 새로 contacts를 읽어와 contacts의 값으로 만들어 줌
         
-        // NSPredicate 특유의(아마도 Objective-C 문법) 문법을 이용해 filterFavoritePredicate 정의
-        let favoritePredicate: NSPredicate? = isAll ? nil : NSPredicate(format: "%K == YES", #keyPath(Contact.favorite))
-        
-        contacts = PersistenceManager.shared.readContacts(filterPredicate: favoritePredicate)
+        contacts = PersistenceManager.shared.readContacts(filterPredicate: predicate)
         // tableView를 reload하하여 새로 불러온 값이 적용되도록 함
         tableView.reloadData()
     }
@@ -170,12 +168,13 @@ class MainViewController: UIViewController {
 
     @objc private func allButtonTapped(_ sender: UIButton) {
         print("all button이 터치되었습니다.")
-        readContacts(isAll: true)
+        readContacts()
     }
 
     @objc private func favoriteButtonTapped(_ sender: UIButton) {
         print("favorite button이 터치되었습니다.")
-        readContacts(isAll: false)
+        let predicate = NSPredicate(format: "%K == YES", #keyPath(Contact.favorite))
+        readContacts(predicate: predicate)
     }
 
     @objc private func addButtonTapped(_ sender: UIButton) {
@@ -201,6 +200,24 @@ extension MainViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        // searchBar의 취소 버튼이 눌리면 입력된 텍스트가 초기화된다
+        searchBar.text = ""
+        // 그리고 contacts를 다시 불러온다. 불필요하게 reload할 가능성이 있어 최적화가 필요하다.
+        readContacts()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // searchText가 비어있을 경우 아래 코드를 실행하지 않는다.
+        guard let searchText = searchBar.text, searchText.count > 0 else { return }
+        
+        // name, memo, phone과 searchText를 비교하는 predicate이다. Dictionary를 활용하여 searchText 인자를 한 번만 전달하도록 하였다.
+        let predicate = NSPredicate(format:
+            "%K CONTAINS[cd] $SEARCH_TEXT OR %K CONTAINS[cd] $SEARCH_TEXT OR %K CONTAINS[cd] $SEARCH_TEXT",
+            #keyPath(Contact.name),
+            #keyPath(Contact.memo),
+            #keyPath(Contact.phone))
+            .withSubstitutionVariables(["SEARCH_TEXT": searchText])
+        readContacts(predicate: predicate)
     }
 }
 
