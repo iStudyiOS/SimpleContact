@@ -15,9 +15,8 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate & UI
     var contact: Contact?
   
     var imagePicker = UIImagePickerController()
-
     
-    private lazy var ImageView: UIImageView = {
+    private let ImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -116,11 +115,14 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate & UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // 텍스트필드,텍스트뷰에 받아온 값 넣어주기
         nameTextField.text = contact?.name
         phoneTextField.text = contact?.phone
         memoTextView.text = contact?.memo
+        if let contact = contact {
+            ImageView.image = UIImage(data: (contact.photo)!)
+        }
         
         setupUI()
         title = "Edit"
@@ -153,23 +155,14 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate & UI
 
         // contact에 값이 있으면 update 없으면 create
         if let contact = contact {
-            PersistenceManager.shared.updateContact(contact, name: name, memo: memo, phone: phone, favorite: true) {
-            error in
-            if error != nil {
-                /* 팁 : error.code를 이용해서 error의 형태를 구분할 수 있음. 예를 들어 error.code == NSValidationErrorMaximum일 경우
-                 어떤 저장값이 최댓값을 넘어섰을 경우 에러가 발생한 것임. */
+            
+            PersistenceManager.shared.updateContact(contact, name: name, memo: memo, phone: phone, favorite: true, photo: photo) {
                 
-                let alert = UIAlertController(title: "에러 발생", message: "입력한 데이터의 형태가 올바르지 않습니다!", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-                alert.addAction(okAction)
-                self.present(alert, animated: true, completion: nil)
-                return
-            }
-            self.navigationController?.popViewController(animated: true)
+                self.navigationController?.popViewController(animated: true)
             }
         } else {
             PersistenceManager.shared.createContact(name: name, memo: memo, phone: phone, favorite: true, photo: photo) {
-            error in
+                error in
             if error != nil {
                 /* 팁 : error.code를 이용해서 error의 형태를 구분할 수 있음. 예를 들어 error.code == NSValidationErrorMaximum일 경우
                  어떤 저장값이 최댓값을 넘어섰을 경우 에러가 발생한 것임. */
